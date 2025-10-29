@@ -14,11 +14,18 @@ export const useChatStore = defineStore('chat', {
       console.info('Enviando mensaje:', text)
       this.messages.push({ role: 'user', text })
 
+      // Obtener o generar user_id único y persistirlo en localStorage
+      let user_id = localStorage.getItem('user_id')
+      if (!user_id) {
+        user_id = crypto.randomUUID()
+        localStorage.setItem('user_id', user_id)
+      }
+
       try {
         const res = await fetch('http://localhost:8443/webchat/webhook', {
           method: 'POST',
           headers: { 'Content-Type': 'application/json' },
-          body: JSON.stringify({ text }),
+          body: JSON.stringify({ user_id, text }),
         })
         console.info('Respuesta recibida:', res)
         const data = await res.json()
