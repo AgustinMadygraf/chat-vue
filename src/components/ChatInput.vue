@@ -10,6 +10,8 @@ function onSend() {
   emit('send', input.value)
   input.value = ''
 }
+
+console.log('ChatInput.vue montado')
 </script>
 
 <template>

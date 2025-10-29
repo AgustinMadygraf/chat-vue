@@ -14,6 +14,8 @@ const { messages } = storeToRefs(chat)
 function sendMessage(text: string) {
   chat.sendMessage(text)
 }
+
+console.log('Home.vue montado', messages.value)
 </script>
 
 <template>
