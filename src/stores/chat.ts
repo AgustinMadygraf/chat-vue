@@ -5,6 +5,14 @@ type Message = {
   text: string
 }
 
+// Polyfill para randomUUID
+function uuidv4() {
+  return 'xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx'.replace(/[xy]/g, function(c) {
+    const r = Math.random() * 16 | 0, v = c === 'x' ? r : (r & 0x3 | 0x8)
+    return v.toString(16)
+  })
+}
+
 export const useChatStore = defineStore('chat', {
   state: () => ({
     messages: [] as Message[],
@@ -17,7 +25,7 @@ export const useChatStore = defineStore('chat', {
       // Obtener o generar user_id único y persistirlo en localStorage
       let user_id = localStorage.getItem('user_id')
       if (!user_id) {
-        user_id = crypto.randomUUID()
+        user_id = uuidv4()
         localStorage.setItem('user_id', user_id)
       }
 
