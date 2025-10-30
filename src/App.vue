@@ -6,58 +6,148 @@ Path: src/App.vue
 import { RouterView } from 'vue-router'
 
 const appName = 'MadyBot'
-console.log('App.vue montado')
 </script>
 
 <template>
-  <div class="app min-vh-100 d-flex bg-light">
+  <div class="app-layout">
     <!-- Sidebar -->
-    <aside class="sidebar bg-dark text-white d-flex flex-column p-3" style="width: 260px;">
-      <div class="mb-4">
-        <h2 class="h5 text-center">
-          <i class="bi bi-chat-dots me-2"></i>{{ appName }}
-        </h2>
+    <aside class="sidebar">
+      <div class="sidebar-header">
+        <button class="new-chat-btn">
+          <i class="bi bi-plus-lg"></i> Nuevo Chat
+        </button>
       </div>
-      <nav class="flex-grow-1">
-        <ul class="nav nav-pills flex-column">
-          <li class="nav-item mb-2">
-            <a class="nav-link active bg-secondary d-flex align-items-center" href="#">
-              <i class="bi bi-plus-lg me-2"></i> Nuevo Chat
-            </a>
-          </li>
-          <li class="nav-item mb-2">
-            <a class="nav-link text-white d-flex align-items-center" href="#">
-              <i class="bi bi-clock-history me-2"></i> Historial
-            </a>
+      <nav class="sidebar-nav">
+        <ul>
+          <li>
+            <a href="#"><i class="bi bi-clock-history"></i> Historial</a>
           </li>
         </ul>
       </nav>
-      <div class="mt-auto pt-3 border-top border-secondary">
-        <a href="#" class="d-flex align-items-center text-white-50 small">
-          <i class="bi bi-gear me-2"></i> Configuración
-        </a>
+      <div class="sidebar-footer">
+        <a href="#"><i class="bi bi-gear"></i> Configuración</a>
       </div>
     </aside>
 
     <!-- Main content -->
-    <div class="flex-grow-1 d-flex flex-column position-relative">
-      <header class="app-header navbar navbar-light bg-white border-bottom" role="banner">
-        <div class="container-fluid">
-          <h1 class="brand navbar-brand mb-0">{{ appName }}</h1>
-        </div>
+    <div class="main-content">
+      <header class="main-header">
+        <span class="app-title">{{ appName }}</span>
       </header>
-
-      <main class="app-main flex-fill py-4" role="main" style="padding-bottom: 90px;">
-        <div class="container-fluid h-100">
-          <RouterView />
-        </div>
+      <main class="main-area">
+        <RouterView />
       </main>
-
-      <footer class="app-footer bg-white border-top py-3 mt-auto" role="contentinfo">
-        <div class="container-fluid text-center">
-          <small>&copy; {{ new Date().getFullYear() }} · v0.1.0</small>
-        </div>
+      <footer class="main-footer">
+        <small>&copy; {{ new Date().getFullYear() }} · v0.1.0</small>
       </footer>
     </div>
   </div>
 </template>
+
+<style scoped>
+.app-layout {
+  display: flex;
+  min-height: 100vh;
+  background: #f7f7f8;
+  font-family: 'Inter', 'Segoe UI', Arial, sans-serif;
+}
+
+.sidebar {
+  width: 260px;
+  background: #343541;
+  color: #ececf1;
+  display: flex;
+  flex-direction: column;
+  padding: 16px 0;
+}
+
+.sidebar-header {
+  padding: 0 24px 24px 24px;
+}
+
+.new-chat-btn {
+  width: 100%;
+  background: #444654;
+  color: #ececf1;
+  border: none;
+  border-radius: 8px;
+  padding: 12px;
+  font-size: 1rem;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  cursor: pointer;
+  margin-bottom: 16px;
+}
+
+.sidebar-nav ul {
+  list-style: none;
+  padding: 0 24px;
+  margin: 0;
+}
+
+.sidebar-nav li {
+  margin-bottom: 12px;
+}
+
+.sidebar-nav a {
+  color: #ececf1;
+  text-decoration: none;
+  font-size: 1rem;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 8px 0;
+}
+
+.sidebar-footer {
+  margin-top: auto;
+  padding: 24px;
+  border-top: 1px solid #444654;
+}
+
+.sidebar-footer a {
+  color: #c5c5d2;
+  font-size: 0.95rem;
+  text-decoration: none;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.main-content {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  background: #f7f7f8;
+}
+
+.main-header {
+  padding: 18px 32px;
+  background: #fff;
+  border-bottom: 1px solid #ececf1;
+  font-size: 1.2rem;
+  font-weight: 500;
+}
+
+.app-title {
+  color: #343541;
+}
+
+.main-area {
+  flex: 1;
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+  min-height: 0;
+}
+
+.main-footer {
+  padding: 12px 0;
+  background: #fff;
+  border-top: 1px solid #ececf1;
+  text-align: center;
+  color: #b4b4c7;
+  font-size: 0.95rem;
+}
+</style>
