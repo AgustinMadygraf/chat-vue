@@ -24,16 +24,11 @@ jobs:
         run: mkdir -p dist/assets
 
       # (Opcional) generar .htaccess dentro de dist si no lo versionás
-      - name: Ensure .htaccess for SPA + HTTPS
+      - name: Ensure .htaccess for SPA (sin forzar HTTPS)
         run: |
           DIST="dist"
           mkdir -p "$DIST"
           cat > "$DIST/.htaccess" <<'EOF'
-          # Forzar HTTPS (si tenés SSL activo)
-          RewriteEngine On
-          RewriteCond %{HTTPS} !=on
-          RewriteRule ^ https://%{HTTP_HOST}%{REQUEST_URI} [L,R=301]
-
           # SPA fallback (history mode)
           RewriteEngine On
           RewriteRule ^index\.html$ - [L]
