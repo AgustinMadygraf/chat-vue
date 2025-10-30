@@ -22,7 +22,7 @@ console.log('App.vue montado')
         <ul class="nav nav-pills flex-column">
           <li class="nav-item mb-2">
             <a class="nav-link active bg-secondary d-flex align-items-center" href="#">
-              <i class="bi bi-plus-lg me-2"></i> Nuevo chat
+              <i class="bi bi-plus-lg me-2"></i> Nuevo Chat
             </a>
           </li>
           <li class="nav-item mb-2">
