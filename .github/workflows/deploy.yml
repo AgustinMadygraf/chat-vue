@@ -44,7 +44,7 @@ jobs:
           server: ${{ secrets.FTP_SERVER }}
           username: ${{ secrets.FTP_USERNAME }}
           password: ${{ secrets.FTP_PASSWORD }}
-          local-dir: dist
+          local-dir: dist/
           server-dir: ${{ secrets.FTP_DIR }}
           # (Opcional) limpia archivos obsoletos en el server:
           dangerous-clean-slate: true
