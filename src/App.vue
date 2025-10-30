@@ -5,7 +5,7 @@ Path: src/App.vue
 <script setup lang="ts">
 import { RouterView } from 'vue-router'
 
-const appName = 'chat-vue'
+const appName = 'MadyBot'
 console.log('App.vue montado')
 </script>
 
