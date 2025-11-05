@@ -4,7 +4,7 @@ Path: src/views/Home.vue
 
 <script setup lang="ts">
 import { storeToRefs } from 'pinia'
-import { useChatStore } from '../stores/chat'
+import { useChatStore } from '../interface_adapters/presenters/chat'
 import ChatMessages from '../components/ChatMessages.vue'
 import ChatInput from '../components/ChatInput.vue'
 
