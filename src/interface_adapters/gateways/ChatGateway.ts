@@ -6,8 +6,12 @@ export interface ChatGateway {
   sendMessage(userId: string, text: string): Promise<{ text: string; timestamp?: string }>
 }
 
+function normalizeEndpoint(endpoint: string): string {
+  return endpoint.replace(/\/+$/, '')
+}
+
 export class HttpChatGateway implements ChatGateway {
-  private endpoint = import.meta.env.VITE_API_ENDPOINT
+  private endpoint = normalizeEndpoint(import.meta.env.VITE_API_ENDPOINT)
 
   constructor() {
     console.info("API endpoint:", this.endpoint)
