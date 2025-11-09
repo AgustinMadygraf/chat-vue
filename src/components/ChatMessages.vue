@@ -108,41 +108,40 @@ const groupedMessages = computed<MessageGroup[]>(() => {
 </script>
 
 <template>
-  <div class="py-3">
+  <div class="py-3 bg-dark text-light">
     <template v-if="groupedMessages.length">
       <section v-for="group in groupedMessages" :key="group.key" class="mb-4">
         <p class="text-center text-muted text-uppercase small fw-semibold mb-3">
           {{ group.label }}
         </p>
-        <ul class="list-group border-0 bg-transparent">
+        <ul class="list-unstyled mb-0">
           <li
             v-for="item in group.items"
             :key="item.id"
-            class="list-group-item border-0 bg-transparent px-0"
+            class="mb-3"
           >
-            <div
-              class="d-flex align-items-end"
-              :class="item.message.role === 'user' ? 'justify-content-end' : 'justify-content-start'"
-            >
+            <div class="d-flex align-items-end w-100"
+              :class="item.message.role === 'user' ? 'justify-content-end' : 'justify-content-start'">
               <div v-if="item.message.role === 'assistant'" class="me-2">
-                <i class="bi bi-robot fs-3 text-secondary"></i>
+                <i class="bi bi-robot fs-4 text-secondary"></i>
               </div>
               <div
                 :class="[
                   'p-3',
                   'rounded-4',
+                  'w-100',
+                  'mx-auto',
                   item.message.role === 'user'
-                    ? 'bg-success text-white'
-                    : 'bg-light text-dark',
-                  'shadow-sm',
+                    ? 'bg-dark text-light border border-secondary'
+                    : 'bg-secondary text-light',
                   'mb-1',
                 ]"
-                style="max-width: 70%;"
+                style="max-width: 700px;"
               >
                 {{ item.message.text }}
               </div>
               <div v-if="item.message.role === 'user'" class="ms-2">
-                <i class="bi bi-person-circle fs-3 text-secondary"></i>
+                <i class="bi bi-person-circle fs-4 text-secondary"></i>
               </div>
             </div>
             <p

@@ -14,9 +14,9 @@ function openSidebar() { sidebarRef.value.openSidebar() }
 </script>
 
 <template>
-  <div class="d-flex min-vh-100 bg-dark text-light font-sans">
+  <div class="d-flex min-vh-100 bg-dark text-light">
     <AppSidebar ref="sidebarRef" />
-    <div class="flex-grow-1 d-flex flex-column bg-dark-subtle">
+    <div class="flex-grow-1 d-flex flex-column bg-dark">
       <AppHeader :openSidebar="openSidebar" />
       <main class="flex-grow-1 d-flex flex-column min-vh-0">
         <RouterView />

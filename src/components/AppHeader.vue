@@ -8,17 +8,16 @@ defineProps<{ openSidebar: () => void }>()
 </script>
 
 <template>
-  <header class="p-3 border-bottom border-secondary bg-dark-subtle">
+  <header class="p-3 border-bottom border-secondary bg-dark">
     <div class="d-flex align-items-center">
       <button
-        class="btn btn-dark d-md-none me-2"
+        class="btn btn-link text-light d-md-none me-5 p-0"
         @click="openSidebar"
         aria-label="Abrir menú"
-        style="padding: 0.25rem 0.5rem;"
       >
-        <i class="bi bi-list fs-2"></i>
+        <i class="bi bi-list fs-5"></i>
       </button>
-      <span class="fs-4 fw-semibold text-dark-emphasis">{{ appName }}</span>
+      <span class="fs-6 fw-medium text-light">{{ appName }} <span class="fw-normal opacity-75 small">• beta</span></span>
     </div>
   </header>
 </template>
