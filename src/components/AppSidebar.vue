@@ -3,28 +3,26 @@ Path: src/components/AppSidebar.vue
 -->
 
 <script setup lang="ts">
-import { ref } from 'vue'
+import { computed } from 'vue'
+import { useSidebarStore } from '../stores/sidebarStore'
 const appName = import.meta.env.VITE_APP_NAME || 'MadyBot'
-const showSidebar = ref(false)
-function openSidebar() { showSidebar.value = true }
-function closeSidebar() { showSidebar.value = false }
-
-defineExpose({ openSidebar, closeSidebar, showSidebar })
+const sidebar = useSidebarStore()
+const showSidebar = computed(() => sidebar.isOpen)
 </script>
 
 <template>
   <!-- ...el resto del template permanece igual... -->
+  <!-- Overlay -->
+  <div v-if="showSidebar" class="sidebar-overlay" @click="sidebar.close"></div>
   <!-- Offcanvas Sidebar -->
   <div
     class="sidebar-offcanvas"
     :class="{ show: showSidebar }"
-    :style="{ visibility: showSidebar ? 'visible' : 'hidden' }"
-    @click.self="closeSidebar"
     tabindex="-1"
   >
     <div class="sidebar-offcanvas-header">
       <span class="sidebar-title">{{ appName }}</span>
-      <button type="button" class="sidebar-close-btn" @click="closeSidebar" aria-label="Cerrar menú">
+  <button type="button" class="sidebar-close-btn" @click="sidebar.close" aria-label="Cerrar menú">
         <svg width="20" height="20" viewBox="0 0 20 20" fill="none">
           <line x1="5" y1="5" x2="15" y2="15" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
           <line x1="15" y1="5" x2="5" y2="15" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
@@ -113,7 +111,7 @@ defineExpose({ openSidebar, closeSidebar, showSidebar })
   color: var(--text-primary);
   box-shadow: 2px 0 16px #0006;
   transform: translateX(-100%);
-  transition: transform 0.2s cubic-bezier(.4,0,.2,1);
+  transition: transform 0.4s cubic-bezier(.4,0,.2,1);
   z-index: 1040;
   display: flex;
   flex-direction: column;
@@ -224,3 +222,16 @@ defineExpose({ openSidebar, closeSidebar, showSidebar })
   }
 }
 </style>
+
+/* Overlay oscuro para sidebar tipo ChatGPT */
+.sidebar-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  background: rgba(0,0,0,0.35);
+  z-index: 1039;
+  transition: opacity 0.2s cubic-bezier(.4,0,.2,1);
+  opacity: 1;
+}

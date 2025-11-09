@@ -1,6 +1,10 @@
-import { createRouter, createWebHistory } from 'vue-router'
+/*
+Path: src/router.ts
+*/
 
-const routes = [
+import { createRouter, createWebHistory, Router, RouteRecordRaw } from 'vue-router'
+
+const routes: RouteRecordRaw[] = [
   {
     path: '/',
     component: () => import('./views/Home.vue'),
@@ -9,7 +13,7 @@ const routes = [
 
 const base = import.meta.env.BASE_URL // Vite inyecta esto según config
 
-export const router = createRouter({
+export const router: Router = createRouter({
   history: createWebHistory(base),
   routes,
 })

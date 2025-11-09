@@ -3,8 +3,9 @@ Path: src/components/AppHeader.vue
 -->
 
 <script setup lang="ts">
+import { useSidebarStore } from '../stores/sidebarStore'
 const appName = import.meta.env.VITE_APP_NAME || 'MadyBot'
-const props = defineProps<{ openSidebar: () => void }>()
+const sidebar = useSidebarStore()
 </script>
 
 <template>
@@ -13,7 +14,7 @@ const props = defineProps<{ openSidebar: () => void }>()
       <!-- Zona izquierda: menú -->
       <button
         class="app-header__menu"
-        @click="props.openSidebar()"
+        @click="sidebar.open()"
         aria-label="Abrir menú"
       >
         <svg
