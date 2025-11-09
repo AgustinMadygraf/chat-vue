@@ -13,25 +13,7 @@ defineExpose({ openSidebar, closeSidebar, showSidebar })
 </script>
 
 <template>
-  <!-- Botón menú móvil, sin Bootstrap, SVG propio -->
-  <button
-    class="sidebar-menu-btn"
-    @click="openSidebar"
-    aria-label="Abrir menú"
-  >
-    <svg
-      class="sidebar-menu-icon"
-      width="28"
-      height="28"
-      viewBox="0 0 28 28"
-      fill="none"
-      xmlns="http://www.w3.org/2000/svg"
-      aria-hidden="true"
-    >
-      <rect x="4" y="8" width="16" height="2" rx="1" fill="currentColor"/>
-      <rect x="4" y="16" width="10" height="2" rx="1" fill="currentColor"/>
-    </svg>
-  </button>
+  <!-- ...el resto del template permanece igual... -->
   <!-- Offcanvas Sidebar -->
   <div
     class="sidebar-offcanvas"
@@ -118,38 +100,7 @@ defineExpose({ openSidebar, closeSidebar, showSidebar })
 </template>
 
 <style scoped>
-/* Botón menú móvil */
-.sidebar-menu-btn {
-  position: fixed;
-  top: 1rem;
-  left: 1rem;
-  z-index: 1030;
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-  background: var(--bg-main);
-  border: none;
-  color: var(--text-primary);
-  padding: 0.5rem;
-  border-radius: 0.5rem;
-  box-shadow: 0 2px 8px #0002;
-  cursor: pointer;
-  transition: opacity 0.15s;
-}
-.sidebar-menu-btn:focus,
-.sidebar-menu-btn:hover {
-  opacity: 0.7;
-  outline: none;
-}
-@media (min-width: 768px) {
-  .sidebar-menu-btn {
-    display: none;
-  }
-}
-.sidebar-menu-icon {
-  width: 1.75rem;
-  height: 1.75rem;
-}
+
 
 /* Offcanvas Sidebar */
 .sidebar-offcanvas {
