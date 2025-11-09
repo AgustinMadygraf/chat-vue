@@ -13,60 +13,263 @@ defineExpose({ openSidebar, closeSidebar, showSidebar })
 </script>
 
 <template>
-  <!-- Botón menú móvil -->
+  <!-- Botón menú móvil, sin Bootstrap, SVG propio -->
   <button
-    class="btn btn-dark d-md-none position-fixed top-0 start-0 m-3 z-3"
+    class="sidebar-menu-btn"
     @click="openSidebar"
     aria-label="Abrir menú"
   >
-    <i class="bi bi-list fs-2"></i>
+    <svg
+      class="sidebar-menu-icon"
+      width="28"
+      height="28"
+      viewBox="0 0 28 28"
+      fill="none"
+      xmlns="http://www.w3.org/2000/svg"
+      aria-hidden="true"
+    >
+      <rect x="4" y="8" width="16" height="2" rx="1" fill="currentColor"/>
+      <rect x="4" y="16" width="10" height="2" rx="1" fill="currentColor"/>
+    </svg>
   </button>
   <!-- Offcanvas Sidebar -->
   <div
-    class="offcanvas offcanvas-start bg-dark text-light"
-    tabindex="-1"
+    class="sidebar-offcanvas"
     :class="{ show: showSidebar }"
     :style="{ visibility: showSidebar ? 'visible' : 'hidden' }"
     @click.self="closeSidebar"
+    tabindex="-1"
   >
-    <div class="offcanvas-header border-bottom border-secondary">
-      <h5 class="offcanvas-title">{{ appName }}</h5>
-      <button type="button" class="btn-close btn-close-white" @click="closeSidebar"></button>
+    <div class="sidebar-offcanvas-header">
+      <span class="sidebar-title">{{ appName }}</span>
+      <button type="button" class="sidebar-close-btn" @click="closeSidebar" aria-label="Cerrar menú">
+        <svg width="20" height="20" viewBox="0 0 20 20" fill="none">
+          <line x1="5" y1="5" x2="15" y2="15" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+          <line x1="15" y1="5" x2="5" y2="15" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+        </svg>
+      </button>
     </div>
-    <div class="offcanvas-body d-flex flex-column h-100 p-0">
-      <div class="p-3">
-        <button class="btn btn-secondary w-100 mb-3">
-          <i class="bi bi-plus-lg"></i> Nuevo Chat
-        </button>
-        <nav>
-          <ul class="nav flex-column">
-            <li class="nav-item mb-2">
-              <a class="nav-link text-light" href="#"><i class="bi bi-clock-history"></i> Historial</a>
-            </li>
-          </ul>
-        </nav>
-      </div>
-      <div class="mt-auto border-top border-secondary p-3">
-        <a class="nav-link text-secondary" href="#"><i class="bi bi-gear"></i> Configuración</a>
+    <div class="sidebar-offcanvas-body">
+      <button class="sidebar-action-btn">
+        <svg width="18" height="18" viewBox="0 0 18 18" fill="none">
+          <path d="M9 3v12M3 9h12" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+        </svg>
+        Nuevo Chat
+      </button>
+      <nav>
+        <ul class="sidebar-nav">
+          <li>
+            <a class="sidebar-nav-link" href="#">
+              <svg width="18" height="18" viewBox="0 0 18 18" fill="none">
+                <circle cx="9" cy="9" r="7" stroke="currentColor" stroke-width="2"/>
+                <path d="M9 5v4l2 2" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+              </svg>
+              Historial
+            </a>
+          </li>
+        </ul>
+      </nav>
+      <div class="sidebar-footer">
+        <a class="sidebar-nav-link muted" href="#">
+          <svg width="18" height="18" viewBox="0 0 18 18" fill="none">
+            <circle cx="9" cy="9" r="7" stroke="currentColor" stroke-width="2"/>
+            <path d="M9 6v3" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+            <circle cx="9" cy="12" r="1" fill="currentColor"/>
+          </svg>
+          Configuración
+        </a>
       </div>
     </div>
   </div>
   <!-- Sidebar fijo desktop -->
-  <aside class="d-none d-md-flex flex-column bg-dark text-light p-3" style="width:260px;">
+  <aside class="sidebar-desktop">
     <div>
-      <button class="btn btn-secondary w-100 mb-3">
-        <i class="bi bi-plus-lg"></i> Nuevo Chat
+      <button class="sidebar-action-btn">
+        <svg width="18" height="18" viewBox="0 0 18 18" fill="none">
+          <path d="M9 3v12M3 9h12" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+        </svg>
+        Nuevo Chat
       </button>
     </div>
     <nav>
-      <ul class="nav flex-column">
-        <li class="nav-item mb-2">
-          <a class="nav-link text-light" href="#"><i class="bi bi-clock-history"></i> Historial</a>
+      <ul class="sidebar-nav">
+        <li>
+          <a class="sidebar-nav-link" href="#">
+            <svg width="18" height="18" viewBox="0 0 18 18" fill="none">
+              <circle cx="9" cy="9" r="7" stroke="currentColor" stroke-width="2"/>
+              <path d="M9 5v4l2 2" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+            </svg>
+            Historial
+          </a>
         </li>
       </ul>
     </nav>
-    <div class="mt-auto border-top border-secondary pt-3">
-      <a class="nav-link text-secondary" href="#"><i class="bi bi-gear"></i> Configuración</a>
+    <div class="sidebar-footer">
+      <a class="sidebar-nav-link muted" href="#">
+        <svg width="18" height="18" viewBox="0 0 18 18" fill="none">
+          <circle cx="9" cy="9" r="7" stroke="currentColor" stroke-width="2"/>
+          <path d="M9 6v3" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+          <circle cx="9" cy="12" r="1" fill="currentColor"/>
+        </svg>
+        Configuración
+      </a>
     </div>
   </aside>
 </template>
+
+<style scoped>
+/* Botón menú móvil */
+.sidebar-menu-btn {
+  position: fixed;
+  top: 1rem;
+  left: 1rem;
+  z-index: 1030;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  background: var(--bg-main);
+  border: none;
+  color: var(--text-primary);
+  padding: 0.5rem;
+  border-radius: 0.5rem;
+  box-shadow: 0 2px 8px #0002;
+  cursor: pointer;
+  transition: opacity 0.15s;
+}
+.sidebar-menu-btn:focus,
+.sidebar-menu-btn:hover {
+  opacity: 0.7;
+  outline: none;
+}
+@media (min-width: 768px) {
+  .sidebar-menu-btn {
+    display: none;
+  }
+}
+.sidebar-menu-icon {
+  width: 1.75rem;
+  height: 1.75rem;
+}
+
+/* Offcanvas Sidebar */
+.sidebar-offcanvas {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 260px;
+  height: 100vh;
+  background: var(--bg-main);
+  color: var(--text-primary);
+  box-shadow: 2px 0 16px #0006;
+  transform: translateX(-100%);
+  transition: transform 0.2s cubic-bezier(.4,0,.2,1);
+  z-index: 1040;
+  display: flex;
+  flex-direction: column;
+}
+.sidebar-offcanvas.show {
+  transform: translateX(0);
+}
+.sidebar-offcanvas-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 1.25rem 1rem 1rem 1rem;
+  border-bottom: 1px solid var(--bg-placeholder);
+}
+.sidebar-title {
+  font-size: 1rem;
+  font-weight: 500;
+  color: var(--text-primary);
+}
+.sidebar-close-btn {
+  background: none;
+  border: none;
+  color: var(--text-muted);
+  padding: 0.25rem;
+  border-radius: 0.25rem;
+  cursor: pointer;
+  transition: background 0.15s;
+}
+.sidebar-close-btn:focus,
+.sidebar-close-btn:hover {
+  background: var(--bg-placeholder);
+}
+.sidebar-offcanvas-body {
+  flex: 1 1 auto;
+  display: flex;
+  flex-direction: column;
+  padding: 1rem;
+}
+.sidebar-action-btn {
+  width: 100%;
+  display: flex;
+  align-items: center;
+  gap: 0.5em;
+  background: var(--bg-placeholder);
+  color: var(--text-primary);
+  border: none;
+  border-radius: 0.5em;
+  padding: 0.75em 1em;
+  font-size: 1rem;
+  font-weight: 500;
+  margin-bottom: 1.5em;
+  cursor: pointer;
+  transition: background 0.15s;
+}
+.sidebar-action-btn:focus,
+.sidebar-action-btn:hover {
+  background: var(--accent);
+  color: #fff;
+}
+.sidebar-nav {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+.sidebar-nav-link {
+  display: flex;
+  align-items: center;
+  gap: 0.5em;
+  color: var(--text-primary);
+  text-decoration: none;
+  padding: 0.5em 0;
+  font-size: 1rem;
+  border-radius: 0.25em;
+  transition: background 0.15s, color 0.15s;
+}
+.sidebar-nav-link:focus,
+.sidebar-nav-link:hover {
+  background: var(--bg-placeholder);
+  color: var(--accent);
+}
+.sidebar-nav-link.muted {
+  color: var(--text-muted);
+}
+.sidebar-footer {
+  margin-top: auto;
+  border-top: 1px solid var(--bg-placeholder);
+  padding-top: 1em;
+  padding-bottom: 1em;
+}
+
+/* Sidebar fijo desktop */
+.sidebar-desktop {
+  display: none;
+}
+@media (min-width: 768px) {
+  .sidebar-offcanvas {
+    display: none;
+  }
+  .sidebar-desktop {
+    display: flex;
+    flex-direction: column;
+    width: 260px;
+    background: var(--bg-main);
+    color: var(--text-primary);
+    height: 100vh;
+    padding: 1.5rem 1rem 1rem 1rem;
+    box-shadow: 2px 0 16px #0006;
+  }
+}
+</style>

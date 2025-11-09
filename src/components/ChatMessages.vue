@@ -156,11 +156,34 @@ const groupedMessages = computed<MessageGroup[]>(() => {
     </template>
     <div
       v-else
-      class="d-flex flex-column align-items-center justify-content-center text-center text-muted py-5"
+      class="chat-hero-empty"
     >
       <i class="bi bi-chat-dots fs-1 mb-3"></i>
-      <p class="fw-semibold mb-1">Todavía no hay mensajes</p>
-      <p class="small mb-0">Comienza la conversación enviando tu primer mensaje.</p>
+      <p class="chat-hero-title mb-2">¿Qué tienes en mente hoy?</p>
+      <p class="chat-hero-desc small mb-0">ProfeBot está listo para ayudarte.</p>
     </div>
   </div>
 </template>
+
+<style scoped>
+.chat-hero-empty {
+  min-height: 60vh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  color: var(--text-muted);
+  padding: 2rem 0;
+}
+.chat-hero-title {
+  font-size: 2rem;
+  font-weight: 600;
+  color: var(--text-primary);
+  letter-spacing: -0.01em;
+}
+.chat-hero-desc {
+  color: var(--text-muted);
+  font-size: 1rem;
+}
+</style>
