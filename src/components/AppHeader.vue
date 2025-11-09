@@ -3,19 +3,20 @@ Path: src/components/AppHeader.vue
 -->
 
 <script setup lang="ts">
+import { defineEmits } from 'vue'
 const appName = import.meta.env.VITE_APP_NAME || 'MadyBot'
-defineProps<{ openSidebar: () => void }>();
+const emit = defineEmits(['open-sidebar'])
 </script>
 
 <template>
   <header class="app-header">
     <div class="app-header__content">
+      <!-- Botón menú móvil SOLO visible en mobile -->
       <button
         class="app-header__menu"
-        @click="openSidebar"
+        @click="emit('open-sidebar')"
         aria-label="Abrir menú"
       >
-        <!-- Ícono SVG estilo OpenAI: dos líneas, la inferior más corta -->
         <svg
           class="app-header__icon"
           width="28"
@@ -25,7 +26,7 @@ defineProps<{ openSidebar: () => void }>();
           xmlns="http://www.w3.org/2000/svg"
           aria-hidden="true"
         >
-          <rect x="4" y="80" width="16" height="2" rx="1" fill="currentColor"/>
+          <rect x="4" y="8" width="16" height="2" rx="1" fill="currentColor"/>
           <rect x="4" y="16" width="10" height="2" rx="1" fill="currentColor"/>
         </svg>
       </button>
@@ -61,7 +62,7 @@ defineProps<{ openSidebar: () => void }>();
   border: none;
   color: var(--text-primary);
   padding: 0;
-  margin-right: 2rem;
+  margin-right: 1.25rem;
   font-size: 1.5rem;
   cursor: pointer;
   transition: opacity 0.15s;

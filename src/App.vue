@@ -23,7 +23,6 @@ function openSidebar() { sidebarRef.value.openSidebar() }
       <main class="flex-grow-1 d-flex flex-column min-vh-0">
         <RouterView />
       </main>
-      <AppFooter />
     </div>
   </div>
 </template>

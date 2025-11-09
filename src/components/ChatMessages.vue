@@ -108,45 +108,32 @@ const groupedMessages = computed<MessageGroup[]>(() => {
 </script>
 
 <template>
-  <div class="py-3 bg-dark text-light">
+  <div class="chat-messages-root">
     <template v-if="groupedMessages.length">
-      <section v-for="group in groupedMessages" :key="group.key" class="mb-4">
-        <p class="text-center text-muted text-uppercase small fw-semibold mb-3">
+      <section v-for="group in groupedMessages" :key="group.key" class="chat-group">
+        <p class="chat-group-label">
           {{ group.label }}
         </p>
-        <ul class="list-unstyled mb-0">
+        <ul class="chat-list">
           <li
             v-for="item in group.items"
             :key="item.id"
-            class="mb-3"
+            class="chat-list-item"
           >
-            <div class="d-flex align-items-end w-100"
-              :class="item.message.role === 'user' ? 'justify-content-end' : 'justify-content-start'">
-              <div v-if="item.message.role === 'assistant'" class="me-2">
-                <i class="bi bi-robot fs-4 text-secondary"></i>
-              </div>
+            <div
+              class="chat-row"
+              :class="item.message.role === 'user' ? 'chat-row-user' : 'chat-row-assistant'"
+            >
               <div
-                :class="[
-                  'p-3',
-                  'rounded-4',
-                  'w-100',
-                  'mx-auto',
-                  item.message.role === 'user'
-                    ? 'bg-dark text-light border border-secondary'
-                    : 'bg-secondary text-light',
-                  'mb-1',
-                ]"
-                style="max-width: 700px;"
+                class="chat-bubble"
+                :class="item.message.role === 'user' ? 'chat-bubble-user' : 'chat-bubble-assistant'"
               >
                 {{ item.message.text }}
               </div>
-              <div v-if="item.message.role === 'user'" class="ms-2">
-                <i class="bi bi-person-circle fs-4 text-secondary"></i>
-              </div>
             </div>
             <p
-              class="small text-muted mb-0"
-              :class="item.message.role === 'user' ? 'text-end' : 'text-start'"
+              class="chat-meta"
+              :class="item.message.role === 'user' ? 'chat-meta-user' : 'chat-meta-assistant'"
             >
               {{ item.message.role === 'user' ? 'Tú' : 'Asistente' }} · {{ item.timeLabel }}
             </p>
@@ -154,18 +141,105 @@ const groupedMessages = computed<MessageGroup[]>(() => {
         </ul>
       </section>
     </template>
-    <div
-      v-else
-      class="chat-hero-empty"
-    >
-      <i class="bi bi-chat-dots fs-1 mb-3"></i>
+    <div v-else class="chat-hero-empty">
+      <!-- Ícono SVG estilo OpenAI -->
+      <svg width="48" height="48" viewBox="0 0 48 48" fill="none" class="mb-3" aria-hidden="true">
+        <rect x="8" y="16" width="32" height="4" rx="2" fill="currentColor" opacity="0.15"/>
+        <rect x="8" y="24" width="24" height="4" rx="2" fill="currentColor" opacity="0.15"/>
+      </svg>
       <p class="chat-hero-title mb-2">¿Qué tienes en mente hoy?</p>
-      <p class="chat-hero-desc small mb-0">ProfeBot está listo para ayudarte.</p>
+      <p class="chat-hero-desc">ProfeBot está listo para ayudarte.</p>
     </div>
   </div>
 </template>
 
 <style scoped>
+.chat-messages-root {
+  background: var(--bg-main);
+  color: var(--text-primary);
+  padding: 2.5rem 0 1.5rem 0;
+  min-height: 100%;
+}
+
+.chat-group {
+  margin-bottom: 2.5rem;
+}
+
+.chat-group-label {
+  text-align: center;
+  color: var(--text-muted);
+  text-transform: uppercase;
+  font-size: 0.75rem;
+  font-weight: 600;
+  margin-bottom: 1.5rem;
+  letter-spacing: 0.08em;
+}
+
+.chat-list {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+
+.chat-list-item {
+  margin-bottom: 1.5rem;
+}
+
+.chat-row {
+  display: flex;
+  width: 100%;
+}
+
+.chat-row-user {
+  justify-content: flex-end;
+}
+
+.chat-row-assistant {
+  justify-content: flex-start;
+}
+
+.chat-bubble {
+  padding: 1.15rem 1.25rem;
+  border-radius: 1.25rem;
+  font-size: 1rem;
+  line-height: 1.6;
+  max-width: 700px;
+  width: 100%;
+  box-shadow: 0 2px 8px #0002;
+  word-break: break-word;
+  transition: background 0.2s;
+}
+
+.chat-bubble-user {
+  background: var(--bg-main);
+  color: var(--text-primary);
+  border: 1px solid var(--bg-placeholder);
+  margin-left: auto;
+}
+
+.chat-bubble-assistant {
+  background: var(--bg-placeholder);
+  color: var(--text-primary);
+  border: 1px solid transparent;
+  margin-right: auto;
+}
+
+.chat-meta {
+  font-size: 0.75rem;
+  color: var(--text-muted);
+  margin-top: 0.5rem;
+  margin-bottom: 0;
+  padding: 0 0.25rem;
+}
+
+.chat-meta-user {
+  text-align: right;
+}
+
+.chat-meta-assistant {
+  text-align: left;
+}
+
 .chat-hero-empty {
   min-height: 60vh;
   display: flex;
