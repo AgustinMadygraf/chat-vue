@@ -33,6 +33,12 @@ watch(
 <template>
   <form class="chat-input-bar" @submit.prevent="onSend">
     <div class="chat-input-pill">
+      <button type="button" class="chat-options-btn" aria-label="Más opciones">
+        <svg width="20" height="20" viewBox="0 0 20 20" fill="none">
+          <circle cx="10" cy="10" r="9" stroke="var(--accent)" stroke-width="2" fill="none" />
+          <path d="M10 6v8M6 10h8" stroke="var(--accent)" stroke-width="2" stroke-linecap="round"/>
+        </svg>
+      </button>
       <input
         v-model="input"
         type="text"
@@ -113,7 +119,7 @@ watch(
   align-items: center;
   background: var(--bg-placeholder);
   border-radius: 2rem;
-  border: 1px solid var(--text-muted);
+  /* border: 1px solid var(--text-muted); */
   box-shadow: 0 2px 8px #0002;
   padding: 0.5rem 1.25rem;
   width: 100%;
@@ -201,6 +207,32 @@ watch(
   text-align: left;
 }
 
+/* Botón de opciones a la izquierda */
+.chat-options-btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  background: var(--bg-send-btn);
+  border: none;
+  border-radius: 50%;
+  width: 2.2rem;
+  height: 2.2rem;
+  margin-right: 0.5rem;
+  cursor: pointer;
+  transition: opacity 0.15s, background 0.15s;
+  padding: 0;
+}
+.chat-options-btn:focus,
+.chat-options-btn:hover {
+  opacity: 0.8;
+  background: var(--accent);
+}
+.chat-options-btn svg {
+  display: block;
+  width: 1.2rem;
+  height: 1.2rem;
+}
+
 /* Mobile safe-area y responsividad */
 @media (max-width: 600px) {
   .chat-input-bar {
@@ -209,6 +241,11 @@ watch(
   .chat-input-pill {
     padding-left: 0.75rem;
     padding-right: 0.75rem;
+  }
+  .chat-options-btn {
+    width: 2rem;
+    height: 2rem;
+    margin-right: 0.3rem;
   }
 }
 </style>
