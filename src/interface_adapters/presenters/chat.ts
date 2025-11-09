@@ -5,11 +5,13 @@ Path: src/stores/chat.ts
 import { defineStore } from 'pinia'
 import { Message } from '../../entities/Message'
 import { HttpChatGateway } from '../gateways/ChatGateway'
-import { SendMessageUseCase } from '../../use_cases/SendMessageUseCase'
 import { ChatController } from '../controllers/ChatController'
+import { LocalStorageUserIdentityProvider } from '../providers/LocalStorageUserIdentityProvider'
+import { SendMessageUseCase } from '../../use_cases/SendMessageUseCase'
 
 const gateway = new HttpChatGateway()
-const sendMessageUseCase = new SendMessageUseCase(gateway)
+const userIdentityProvider = new LocalStorageUserIdentityProvider(localStorage)
+const sendMessageUseCase = new SendMessageUseCase(gateway, userIdentityProvider)
 const chatController = new ChatController(sendMessageUseCase)
 
 export const useChatStore = defineStore('chat', {
