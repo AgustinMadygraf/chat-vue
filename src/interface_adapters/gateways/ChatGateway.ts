@@ -14,7 +14,6 @@ export class HttpChatGateway implements ChatGateway {
   private endpoint = normalizeEndpoint(import.meta.env.VITE_API_ENDPOINT)
 
   constructor() {
-    console.info("API endpoint:", this.endpoint)
   }
 
   async sendMessage(
