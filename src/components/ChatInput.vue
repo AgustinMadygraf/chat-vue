@@ -35,8 +35,12 @@ watch(
     <div class="chat-input-pill">
       <button type="button" class="chat-options-btn" aria-label="Más opciones">
         <svg width="20" height="20" viewBox="0 0 20 20" fill="none">
-          <circle cx="10" cy="10" r="9" stroke="var(--accent)" stroke-width="2" fill="none" />
-          <path d="M10 6v8M6 10h8" stroke="var(--accent)" stroke-width="2" stroke-linecap="round"/>
+          <path
+            d="M10 6v8M6 10h8"
+            stroke="var(--icon-neutral)"
+            stroke-width="1.5"
+            stroke-linecap="round"
+          />
         </svg>
       </button>
       <input
@@ -208,29 +212,42 @@ watch(
 }
 
 /* Botón de opciones a la izquierda */
+
 .chat-options-btn {
   display: inline-flex;
   align-items: center;
   justify-content: center;
-  background: var(--bg-send-btn);
+  background: var(--icon-bg-neutral); /* Fondo neutro para el círculo */
   border: none;
   border-radius: 50%;
-  width: 2.2rem;
-  height: 2.2rem;
+  width: 2rem;
+  height: 2rem;
   margin-right: 0.5rem;
   cursor: pointer;
-  transition: opacity 0.15s, background 0.15s;
+  transition: background 0.15s, opacity 0.15s;
   padding: 0;
+  box-shadow: none;
+  outline: none;
 }
-.chat-options-btn:focus,
+
+.chat-options-btn:focus {
+  outline: none;
+  box-shadow: 0 0 0 2px rgba(120,120,120,0.08); /* Foco muy sutil */
+}
+
 .chat-options-btn:hover {
-  opacity: 0.8;
-  background: var(--accent);
+  background: var(--bg-placeholder-hover, #353740); /* Leve aclarado en hover */
+  opacity: 0.85;
 }
+
 .chat-options-btn svg {
   display: block;
-  width: 1.2rem;
-  height: 1.2rem;
+  width: 1.1rem;
+  height: 1.1rem;
+}
+
+:root {
+  --bg-placeholder-hover: #353740;
 }
 
 /* Mobile safe-area y responsividad */
