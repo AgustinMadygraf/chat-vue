@@ -9,6 +9,10 @@ export interface ChatGateway {
 export class HttpChatGateway implements ChatGateway {
   private endpoint = import.meta.env.VITE_API_ENDPOINT
 
+  constructor() {
+    console.info("API endpoint:", this.endpoint)
+  }
+
   async sendMessage(
     userId: string,
     text: string,
