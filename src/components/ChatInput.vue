@@ -32,12 +32,15 @@ watch(
 
 <template>
   <form class="chat-input-bar px-3 mb-3" @submit.prevent="onSend">
-    <div class="d-flex align-items-center gap-2 rounded-pill border border-secondary shadow-sm px-3 py-2 bg-dark w-100">
+    <div
+      class="d-flex align-items-center gap-2 rounded-pill border shadow-sm px-3 py-2 w-100"
+      style="background: var(--bg-placeholder); border-color: var(--text-muted);"
+    >
       <input
         v-model="input"
         type="text"
-        class="form-control bg-transparent border-0 text-light px-0 flex-grow-1 chat-input-placeholder"
-        style="box-shadow: none;"
+        class="form-control bg-transparent border-0 px-0 flex-grow-1 chat-input-placeholder"
+        style="color: var(--text-primary); box-shadow: none;"
         placeholder="Preguntá lo que quieras"
         autocomplete="off"
         :disabled="sending"
@@ -48,9 +51,14 @@ watch(
         class="btn p-0 d-flex align-items-center justify-content-center"
         :disabled="!canSubmit"
         aria-label="Enviar mensaje"
+        style="background: var(--bg-send-btn); border-radius: 50%; width: 2.5rem; height: 2.5rem;"
       >
         <span v-if="sending" class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span>
-        <i v-else class="bi bi-send text-light"></i>
+        <i
+          v-else
+          class="bi bi-send"
+          :style="{ color: 'var(--icon-send)' }"
+        ></i>
       </button>
     </div>
     <p
@@ -78,11 +86,8 @@ watch(
 .chat-input-bar .form-control:focus {
   box-shadow: none;
 }
-.chat-input-bar .border-secondary {
-  border-color: rgba(255, 255, 255, 0.15) !important;
-}
 .chat-input-placeholder::placeholder {
-  color: #bfc4c9;
+  color: var(--text-placeholder);
   opacity: 1;
 }
 .chat-input-bar button:hover i {
