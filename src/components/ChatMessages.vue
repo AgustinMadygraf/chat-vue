@@ -109,46 +109,58 @@ const groupedMessages = computed<MessageGroup[]>(() => {
 
 <template>
   <div class="chat-messages-root">
-    <template v-if="groupedMessages.length">
-      <section v-for="group in groupedMessages" :key="group.key" class="chat-group">
-        <p class="chat-group-label">
-          {{ group.label }}
-        </p>
-        <ul class="chat-list">
-          <li
-            v-for="item in group.items"
-            :key="item.id"
-            class="chat-list-item"
-          >
-            <div
-              class="chat-row"
-              :class="item.message.role === 'user' ? 'chat-row-user' : 'chat-row-assistant'"
+    <div class="chat-messages-column">
+      <template v-if="groupedMessages.length">
+        <section v-for="group in groupedMessages" :key="group.key" class="chat-group">
+          <div class="chat-group-label-row">
+            <span class="chat-group-label">{{ group.label }}</span>
+          </div>
+          <ul class="chat-list">
+            <li
+              v-for="item in group.items"
+              :key="item.id"
+              class="chat-list-item"
             >
               <div
-                class="chat-bubble"
-                :class="item.message.role === 'user' ? 'chat-bubble-user' : 'chat-bubble-assistant'"
+                v-if="item.message.role === 'assistant'"
+                class="chat-row chat-row-assistant"
               >
-                {{ item.message.text }}
+                <div class="chat-bubble chat-bubble-assistant">
+                  {{ item.message.text }}
+                </div>
+                <!-- Acciones del mensaje (futuro) -->
+                <div class="chat-actions"></div>
               </div>
-            </div>
-            <p
-              class="chat-meta"
-              :class="item.message.role === 'user' ? 'chat-meta-user' : 'chat-meta-assistant'"
-            >
-              {{ item.message.role === 'user' ? 'Tú' : 'Asistente' }} · {{ item.timeLabel }}
-            </p>
-          </li>
-        </ul>
-      </section>
-    </template>
-    <div v-else class="chat-hero-empty">
-      <!-- Ícono SVG estilo OpenAI -->
-      <svg width="48" height="48" viewBox="0 0 48 48" fill="none" class="mb-3" aria-hidden="true">
-        <rect x="8" y="16" width="32" height="4" rx="2" fill="currentColor" opacity="0.15"/>
-        <rect x="8" y="24" width="24" height="4" rx="2" fill="currentColor" opacity="0.15"/>
-      </svg>
-      <p class="chat-hero-title mb-2">¿Qué tienes en mente hoy?</p>
-      <p class="chat-hero-desc">ProfeBot está listo para ayudarte.</p>
+              <div
+                v-else
+                class="chat-row chat-row-user"
+              >
+                <div class="chat-user-message">
+                  {{ item.message.text }}
+                </div>
+              </div>
+              <!-- Metadatos muy sutiles, sólo si quieres mantenerlos -->
+              <!--
+              <p
+                class="chat-meta"
+                :class="item.message.role === 'user' ? 'chat-meta-user' : 'chat-meta-assistant'"
+              >
+                {{ item.message.role === 'user' ? 'Tú' : 'Asistente' }} · {{ item.timeLabel }}
+              </p>
+              -->
+            </li>
+          </ul>
+        </section>
+      </template>
+      <div v-else class="chat-hero-empty">
+        <!-- Ícono SVG estilo OpenAI -->
+        <svg width="48" height="48" viewBox="0 0 48 48" fill="none" class="mb-3" aria-hidden="true">
+          <rect x="8" y="16" width="32" height="4" rx="2" fill="currentColor" opacity="0.15"/>
+          <rect x="8" y="24" width="24" height="4" rx="2" fill="currentColor" opacity="0.15"/>
+        </svg>
+        <p class="chat-hero-title mb-2">¿Qué tienes en mente hoy?</p>
+        <p class="chat-hero-desc">ProfeBot está listo para ayudarte.</p>
+      </div>
     </div>
   </div>
 </template>
@@ -159,20 +171,62 @@ const groupedMessages = computed<MessageGroup[]>(() => {
   color: var(--text-primary);
   padding: 2.5rem 0 1.5rem 0;
   min-height: 100%;
+  display: flex;
+  justify-content: center;
+}
+
+.chat-messages-column {
+  width: 100%;
+  max-width: 680px;
+  margin: 0 auto;
+  padding-left: 1rem;
+  padding-right: 1rem;
+  box-sizing: border-box;
+}
+
+@media (min-width: 600px) {
+  .chat-messages-column {
+    padding-left: 2rem;
+    padding-right: 2rem;
+  }
 }
 
 .chat-group {
   margin-bottom: 2.5rem;
 }
 
-.chat-group-label {
-  text-align: center;
-  color: var(--text-muted);
-  text-transform: uppercase;
-  font-size: 0.75rem;
-  font-weight: 600;
+.chat-group-label-row {
+  display: flex;
+  align-items: center;
+  justify-content: center;
   margin-bottom: 1.5rem;
+  position: relative;
+}
+
+.chat-group-label {
+  font-size: 0.72rem;
+  font-weight: 500;
+  color: var(--text-muted);
+  background: var(--bg-main);
+  padding: 0 0.75em;
+  border-radius: 1em;
   letter-spacing: 0.08em;
+  text-transform: uppercase;
+  z-index: 1;
+  position: relative;
+  box-shadow: 0 0 0 2px var(--bg-main);
+}
+
+.chat-group-label-row::before {
+  content: "";
+  position: absolute;
+  left: 0;
+  right: 0;
+  top: 50%;
+  height: 1px;
+  background: var(--bg-placeholder);
+  opacity: 0.12;
+  z-index: 0;
 }
 
 .chat-list {
@@ -182,7 +236,7 @@ const groupedMessages = computed<MessageGroup[]>(() => {
 }
 
 .chat-list-item {
-  margin-bottom: 1.5rem;
+  margin-bottom: 2.2rem;
 }
 
 .chat-row {
@@ -190,54 +244,61 @@ const groupedMessages = computed<MessageGroup[]>(() => {
   width: 100%;
 }
 
-.chat-row-user {
-  justify-content: flex-end;
-}
-
 .chat-row-assistant {
   justify-content: flex-start;
 }
 
-.chat-bubble {
-  padding: 1.15rem 1.25rem;
-  border-radius: 1.25rem;
-  font-size: 1rem;
-  line-height: 1.6;
-  max-width: 700px;
-  width: 100%;
-  box-shadow: 0 2px 8px #0002;
-  word-break: break-word;
-  transition: background 0.2s;
-}
-
-.chat-bubble-user {
-  background: var(--bg-main);
-  color: var(--text-primary);
-  border: 1px solid var(--bg-placeholder);
-  margin-left: auto;
+.chat-row-user {
+  justify-content: flex-start;
 }
 
 .chat-bubble-assistant {
-  background: var(--bg-placeholder);
+  background: #26272b;
   color: var(--text-primary);
+  border-radius: 0.7rem;
+  padding: 1.05rem 1.15rem;
+  font-size: 1.05rem;
+  line-height: 1.7;
+  box-shadow: 0 1px 4px #0001;
   border: 1px solid transparent;
+  max-width: 100%;
   margin-right: auto;
+  margin-left: 0;
+  transition: background 0.2s;
+  word-break: break-word;
 }
 
+@media (min-width: 600px) {
+  .chat-bubble-assistant {
+    font-size: 1.08rem;
+    padding: 1.15rem 1.35rem;
+  }
+}
+
+/* Usuario: texto plano, sin burbuja */
+.chat-user-message {
+  color: #e6e6e6;
+  background: transparent;
+  font-size: 1.05rem;
+  line-height: 1.7;
+  padding: 0.25rem 0.1rem 0.25rem 0.1rem;
+  margin-left: 0;
+  margin-right: auto;
+  border-radius: 0.3rem;
+  max-width: 100%;
+  word-break: break-word;
+}
+
+/* Metadatos: ocultos por defecto, sólo para referencia */
 .chat-meta {
-  font-size: 0.75rem;
+  font-size: 0.7rem;
   color: var(--text-muted);
-  margin-top: 0.5rem;
+  margin-top: 0.25rem;
   margin-bottom: 0;
   padding: 0 0.25rem;
-}
-
-.chat-meta-user {
-  text-align: right;
-}
-
-.chat-meta-assistant {
+  opacity: 0.4;
   text-align: left;
+  display: none;
 }
 
 .chat-hero-empty {
@@ -259,5 +320,12 @@ const groupedMessages = computed<MessageGroup[]>(() => {
 .chat-hero-desc {
   color: var(--text-muted);
   font-size: 1rem;
+}
+
+/* Acciones del mensaje (futuro) */
+.chat-actions {
+  min-height: 1.5em;
+  margin-top: 0.25em;
+  /* Aquí irán los iconos en el futuro */
 }
 </style>
