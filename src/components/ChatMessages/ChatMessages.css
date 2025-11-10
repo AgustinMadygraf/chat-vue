@@ -1,3 +1,39 @@
+/* --- Animación de aparición de mensajes (fade/slide) --- */
+.chat-fade-slide-enter-active,
+.chat-fade-slide-leave-active {
+  transition: all 0.38s cubic-bezier(.4,0,.2,1);
+}
+.chat-fade-slide-enter-from {
+  opacity: 0;
+  transform: translateY(18px);
+}
+.chat-fade-slide-enter-to {
+  opacity: 1;
+  transform: translateY(0);
+}
+.chat-fade-slide-leave-from {
+  opacity: 1;
+  transform: translateY(0);
+}
+.chat-fade-slide-leave-to {
+  opacity: 0;
+  transform: translateY(8px);
+}
+/* --- Metadatos de hora, solo visible en hover --- */
+.chat-meta-time {
+  display: inline-block;
+  margin-left: 0.7em;
+  font-size: 0.85em;
+  color: var(--text-muted);
+  opacity: 0;
+  transition: opacity 0.18s;
+  vertical-align: middle;
+  pointer-events: none;
+}
+.chat-list-item:hover .chat-meta-time,
+.chat-list-item:focus-within .chat-meta-time {
+  opacity: 0.85;
+}
 /* --- Layout y columna editorial --- */
 .chat-messages-root {
   background: var(--bg-main);
@@ -9,9 +45,9 @@
 }
 .chat-messages-column {
   width: 100%;
-  max-width: 720px;
+  max-width: 680px;
   margin: 0 auto;
-  padding: 32px 0 24px 0;
+  padding: 32px 16px 24px 16px;
   box-sizing: border-box;
   display: flex;
   flex-direction: column;
@@ -20,7 +56,7 @@
 @media (max-width: 700px) {
   .chat-messages-column {
     max-width: 100vw;
-    padding: 16px 0 16px 0;
+    padding: 16px 8px 16px 8px;
   }
 }
 
@@ -86,7 +122,7 @@
   box-shadow: 0 1px 4px #0001;
   padding: 1.1rem 1.3rem 1.1rem 1.3rem;
   font-size: 1.07rem;
-  line-height: 1.6;
+  line-height: 1.75;
   width: 100%;
   word-break: break-word;
   transition: background 0.2s, border 0.2s;
@@ -102,19 +138,20 @@
   display: flex;
   align-items: flex-start;
 }
+/* --- Mensaje del usuario (estilo ChatGPT: texto plano, menos burbuja) --- */
 .chat-bubble-user {
-  background: rgba(255,255,255,0.06);
-  color: #e6e6e6;
-  border-radius: 1.2em;
-  padding: 0.85em 1.25em;
+  background: none;
+  color: var(--text-primary);
+  border-radius: 0.5em;
+  padding: 0.5em 0.2em 0.5em 0.2em;
   font-size: 1.07rem;
-  line-height: 1.6;
+  line-height: 1.75;
   margin-left: 0;
   margin-right: auto;
   max-width: 100%;
   word-break: break-word;
-  border: 1px solid rgba(255,255,255,0.08);
-  box-shadow: 0 1px 2px #0001;
+  border: none;
+  box-shadow: none;
   transition: background 0.2s, border 0.2s;
 }
 .chat-list-item.consecutive .chat-bubble-user {
@@ -123,13 +160,20 @@
 }
 
 /* --- Fila de acciones contextual --- */
+/* --- Fila de acciones contextual (más visible para asistente) --- */
 .chat-actions-row {
   display: flex;
-  gap: 0.25em;
-  margin-top: 8px;
-  opacity: 0;
+  gap: 0.35em;
+  margin-top: 10px;
+  opacity: 0.85;
   pointer-events: none;
   transition: opacity 0.18s;
+  justify-content: flex-start;
+}
+.role-assistant .chat-actions-row {
+  opacity: 1;
+  pointer-events: auto;
+  filter: drop-shadow(0 1px 2px #0003);
 }
 .chat-list-item:hover .chat-actions-row,
 .chat-list-item:focus-within .chat-actions-row {
@@ -143,17 +187,19 @@
   background: none;
   border: none;
   color: var(--text-muted);
-  padding: 0.2em;
+  padding: 0.22em;
   border-radius: 0.3em;
   cursor: pointer;
-  opacity: 0.7;
-  transition: background 0.15s, opacity 0.15s;
+  opacity: 0.85;
+  transition: background 0.15s, opacity 0.15s, color 0.15s;
   font-size: 1em;
+  outline: none;
 }
 .chat-action-btn:hover,
 .chat-action-btn:focus {
-  background: rgba(255,255,255,0.07);
+  background: var(--bg-placeholder);
   opacity: 1;
+  color: var(--accent);
 }
 
 /* --- Empty state --- */

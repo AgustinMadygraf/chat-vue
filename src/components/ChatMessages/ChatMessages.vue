@@ -10,7 +10,7 @@
               <span class="chat-group-hairline"></span>
             </span>
           </div>
-          <ul class="chat-list">
+          <transition-group name="chat-fade-slide" tag="ul" class="chat-list">
             <li
               v-for="(item, idx) in group.items"
               :key="item.id"
@@ -23,6 +23,7 @@
               <div v-if="item.message.role === 'assistant'" class="chat-row chat-row-assistant">
                 <div class="chat-block-assistant">
                   {{ item.message.text }}
+                  <span class="chat-meta-time">{{ item.timeLabel }}</span>
                 </div>
                 <div class="chat-actions-row">
                   <!-- Acciones: copiar, like, dislike, regenerar, más -->
@@ -36,6 +37,7 @@
               <div v-else class="chat-row chat-row-user">
                 <div class="chat-bubble-user">
                   {{ item.message.text }}
+                  <span class="chat-meta-time">{{ item.timeLabel }}</span>
                 </div>
                 <div class="chat-actions-row chat-actions-row-user">
                   <button class="chat-action-btn" title="Editar"><svg width="16" height="16" viewBox="0 0 16 16"><rect x="3" y="3" width="10" height="10" rx="2" fill="currentColor" opacity="0.18"/></svg></button>
@@ -43,7 +45,7 @@
                 </div>
               </div>
             </li>
-          </ul>
+          </transition-group>
         </section>
       </template>
       <div v-else class="chat-hero-empty">

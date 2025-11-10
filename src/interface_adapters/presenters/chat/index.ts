@@ -1,3 +1,7 @@
+/*
+Path: src/interface_adapters/presenters/chat/index.ts
+*/
+
 import { createChatStore } from './createChatStore'
 import { createChatStoreDependencies } from './dependencies'
 
