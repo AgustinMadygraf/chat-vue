@@ -113,47 +113,49 @@ const groupedMessages = computed<MessageGroup[]>(() => {
       <template v-if="groupedMessages.length">
         <section v-for="group in groupedMessages" :key="group.key" class="chat-group">
           <div class="chat-group-label-row">
-            <span class="chat-group-label">{{ group.label }}</span>
+            <span class="chat-group-label">
+              <span class="chat-group-hairline"></span>
+              {{ group.label }}
+              <span class="chat-group-hairline"></span>
+            </span>
           </div>
           <ul class="chat-list">
             <li
-              v-for="item in group.items"
+              v-for="(item, idx) in group.items"
               :key="item.id"
               class="chat-list-item"
+              :class="[
+                'role-' + item.message.role,
+                idx > 0 && item.message.role === group.items[idx-1].message.role ? 'consecutive' : ''
+              ]"
             >
-              <div
-                v-if="item.message.role === 'assistant'"
-                class="chat-row chat-row-assistant"
-              >
-                <div class="chat-bubble chat-bubble-assistant">
+              <div v-if="item.message.role === 'assistant'" class="chat-row chat-row-assistant">
+                <div class="chat-block-assistant">
                   {{ item.message.text }}
                 </div>
-                <!-- Acciones del mensaje (futuro) -->
-                <div class="chat-actions"></div>
-              </div>
-              <div
-                v-else
-                class="chat-row chat-row-user"
-              >
-                <div class="chat-user-message">
-                  {{ item.message.text }}
+                <div class="chat-actions-row">
+                  <!-- Acciones: copiar, like, dislike, regenerar, más -->
+                  <button class="chat-action-btn" title="Copiar"><svg width="16" height="16" viewBox="0 0 16 16"><rect x="3" y="3" width="10" height="10" rx="2" fill="currentColor" opacity="0.18"/></svg></button>
+                  <button class="chat-action-btn" title="Me gusta"><svg width="16" height="16" viewBox="0 0 16 16"><path d="M8 13l-5-5 1.41-1.41L8 10.17l3.59-3.58L13 8z" fill="currentColor" opacity="0.18"/></svg></button>
+                  <button class="chat-action-btn" title="No me gusta"><svg width="16" height="16" viewBox="0 0 16 16"><path d="M8 3l5 5-1.41 1.41L8 5.83l-3.59 3.58L3 8z" fill="currentColor" opacity="0.18"/></svg></button>
+                  <button class="chat-action-btn" title="Regenerar"><svg width="16" height="16" viewBox="0 0 16 16"><path d="M8 2v2a4 4 0 1 1-4 4H2a6 6 0 1 0 6-6z" fill="currentColor" opacity="0.18"/></svg></button>
+                  <button class="chat-action-btn" title="Más"><svg width="16" height="16" viewBox="0 0 16 16"><circle cx="8" cy="8" r="1.5" fill="currentColor" opacity="0.18"/><circle cx="3.5" cy="8" r="1.5" fill="currentColor" opacity="0.18"/><circle cx="12.5" cy="8" r="1.5" fill="currentColor" opacity="0.18"/></svg></button>
                 </div>
               </div>
-              <!-- Metadatos muy sutiles, sólo si quieres mantenerlos -->
-              <!--
-              <p
-                class="chat-meta"
-                :class="item.message.role === 'user' ? 'chat-meta-user' : 'chat-meta-assistant'"
-              >
-                {{ item.message.role === 'user' ? 'Tú' : 'Asistente' }} · {{ item.timeLabel }}
-              </p>
-              -->
+              <div v-else class="chat-row chat-row-user">
+                <div class="chat-bubble-user">
+                  {{ item.message.text }}
+                </div>
+                <div class="chat-actions-row chat-actions-row-user">
+                  <button class="chat-action-btn" title="Editar"><svg width="16" height="16" viewBox="0 0 16 16"><rect x="3" y="3" width="10" height="10" rx="2" fill="currentColor" opacity="0.18"/></svg></button>
+                  <button class="chat-action-btn" title="Copiar"><svg width="16" height="16" viewBox="0 0 16 16"><rect x="3" y="3" width="10" height="10" rx="2" fill="currentColor" opacity="0.18"/></svg></button>
+                </div>
+              </div>
             </li>
           </ul>
         </section>
       </template>
       <div v-else class="chat-hero-empty">
-        <!-- Ícono SVG estilo OpenAI -->
         <svg width="48" height="48" viewBox="0 0 48 48" fill="none" class="mb-3" aria-hidden="true">
           <rect x="8" y="16" width="32" height="4" rx="2" fill="currentColor" opacity="0.15"/>
           <rect x="8" y="24" width="24" height="4" rx="2" fill="currentColor" opacity="0.15"/>
@@ -166,141 +168,166 @@ const groupedMessages = computed<MessageGroup[]>(() => {
 </template>
 
 <style scoped>
+
+/* --- Layout y columna editorial --- */
 .chat-messages-root {
   background: var(--bg-main);
   color: var(--text-primary);
-  padding: 2.5rem 0 1.5rem 0;
   min-height: 100%;
   display: flex;
   justify-content: center;
+  padding: 0;
 }
-
 .chat-messages-column {
   width: 100%;
-  max-width: 680px;
+  max-width: 720px;
   margin: 0 auto;
-  padding-left: 1rem;
-  padding-right: 1rem;
+  padding: 32px 0 24px 0;
   box-sizing: border-box;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
 }
-
-@media (min-width: 600px) {
+@media (max-width: 700px) {
   .chat-messages-column {
-    padding-left: 2rem;
-    padding-right: 2rem;
+    max-width: 100vw;
+    padding: 16px 0 16px 0;
   }
 }
 
-.chat-group {
-  margin-bottom: 2.5rem;
-}
-
+/* --- Separador de fecha minimal --- */
 .chat-group-label-row {
   display: flex;
   align-items: center;
   justify-content: center;
-  margin-bottom: 1.5rem;
+  margin: 24px 0 16px 0;
   position: relative;
 }
-
 .chat-group-label {
-  font-size: 0.72rem;
+  display: flex;
+  align-items: center;
+  font-size: 0.68rem;
   font-weight: 500;
   color: var(--text-muted);
-  background: var(--bg-main);
-  padding: 0 0.75em;
+  background: none;
+  padding: 0 0.7em;
   border-radius: 1em;
   letter-spacing: 0.08em;
   text-transform: uppercase;
   z-index: 1;
   position: relative;
-  box-shadow: 0 0 0 2px var(--bg-main);
+  gap: 0.7em;
 }
-
-.chat-group-label-row::before {
-  content: "";
-  position: absolute;
-  left: 0;
-  right: 0;
-  top: 50%;
+.chat-group-hairline {
+  display: inline-block;
   height: 1px;
-  background: var(--bg-placeholder);
-  opacity: 0.12;
-  z-index: 0;
+  width: 32px;
+  background: var(--text-muted);
+  opacity: 0.10;
+  border-radius: 1px;
 }
 
+/* --- Lista de mensajes --- */
 .chat-list {
   list-style: none;
   margin: 0;
   padding: 0;
-}
-
-.chat-list-item {
-  margin-bottom: 2.2rem;
-}
-
-.chat-row {
-  display: flex;
   width: 100%;
 }
+.chat-list-item {
+  margin-bottom: 14px;
+  transition: margin 0.2s;
+}
+.chat-list-item.consecutive {
+  margin-top: -6px;
+  margin-bottom: 10px;
+}
 
+/* --- Mensaje del asistente (bloque plano) --- */
 .chat-row-assistant {
-  justify-content: flex-start;
+  width: 100%;
+  display: flex;
+  align-items: flex-start;
 }
-
-.chat-row-user {
-  justify-content: flex-start;
-}
-
-.chat-bubble-assistant {
-  background: #26272b;
+.chat-block-assistant {
+  background: rgba(255,255,255,0.02);
   color: var(--text-primary);
-  border-radius: 0.7rem;
-  padding: 1.05rem 1.15rem;
-  font-size: 1.05rem;
-  line-height: 1.7;
+  border-radius: 0.6rem;
+  border: 1px solid rgba(255,255,255,0.06);
   box-shadow: 0 1px 4px #0001;
-  border: 1px solid transparent;
-  max-width: 100%;
-  margin-right: auto;
-  margin-left: 0;
-  transition: background 0.2s;
+  padding: 1.1rem 1.3rem 1.1rem 1.3rem;
+  font-size: 1.07rem;
+  line-height: 1.6;
+  width: 100%;
   word-break: break-word;
+  transition: background 0.2s, border 0.2s;
+}
+.chat-list-item.consecutive .chat-block-assistant {
+  border-top-left-radius: 0.25rem;
+  margin-top: -2px;
 }
 
-@media (min-width: 600px) {
-  .chat-bubble-assistant {
-    font-size: 1.08rem;
-    padding: 1.15rem 1.35rem;
-  }
+/* --- Mensaje del usuario (cápsula) --- */
+.chat-row-user {
+  width: 100%;
+  display: flex;
+  align-items: flex-start;
 }
-
-/* Usuario: texto plano, sin burbuja */
-.chat-user-message {
+.chat-bubble-user {
+  background: rgba(255,255,255,0.06);
   color: #e6e6e6;
-  background: transparent;
-  font-size: 1.05rem;
-  line-height: 1.7;
-  padding: 0.25rem 0.1rem 0.25rem 0.1rem;
+  border-radius: 1.2em;
+  padding: 0.85em 1.25em;
+  font-size: 1.07rem;
+  line-height: 1.6;
   margin-left: 0;
   margin-right: auto;
-  border-radius: 0.3rem;
   max-width: 100%;
   word-break: break-word;
+  border: 1px solid rgba(255,255,255,0.08);
+  box-shadow: 0 1px 2px #0001;
+  transition: background 0.2s, border 0.2s;
+}
+.chat-list-item.consecutive .chat-bubble-user {
+  border-top-left-radius: 0.5em;
+  margin-top: -2px;
 }
 
-/* Metadatos: ocultos por defecto, sólo para referencia */
-.chat-meta {
-  font-size: 0.7rem;
+/* --- Fila de acciones contextual --- */
+.chat-actions-row {
+  display: flex;
+  gap: 0.25em;
+  margin-top: 8px;
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 0.18s;
+}
+.chat-list-item:hover .chat-actions-row,
+.chat-list-item:focus-within .chat-actions-row {
+  opacity: 1;
+  pointer-events: auto;
+}
+.chat-actions-row-user {
+  justify-content: flex-end;
+}
+.chat-action-btn {
+  background: none;
+  border: none;
   color: var(--text-muted);
-  margin-top: 0.25rem;
-  margin-bottom: 0;
-  padding: 0 0.25rem;
-  opacity: 0.4;
-  text-align: left;
-  display: none;
+  padding: 0.2em;
+  border-radius: 0.3em;
+  cursor: pointer;
+  opacity: 0.7;
+  transition: background 0.15s, opacity 0.15s;
+  font-size: 1em;
+}
+.chat-action-btn:hover,
+.chat-action-btn:focus {
+  background: rgba(255,255,255,0.07);
+  opacity: 1;
 }
 
+/* --- Empty state --- */
 .chat-hero-empty {
   min-height: 60vh;
   display: flex;
@@ -320,12 +347,5 @@ const groupedMessages = computed<MessageGroup[]>(() => {
 .chat-hero-desc {
   color: var(--text-muted);
   font-size: 1rem;
-}
-
-/* Acciones del mensaje (futuro) */
-.chat-actions {
-  min-height: 1.5em;
-  margin-top: 0.25em;
-  /* Aquí irán los iconos en el futuro */
 }
 </style>
