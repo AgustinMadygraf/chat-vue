@@ -6,8 +6,8 @@ Path: src/views/Home.vue
 import { storeToRefs } from 'pinia'
 import { computed } from 'vue'
 import { useChatStore } from '../interface_adapters/presenters/chat'
-import ChatMessages from '../components/ChatMessages.vue'
-import ChatInput from '../components/ChatInput.vue'
+import ChatMessages from '../components/ChatMessages/ChatMessages.vue'
+import ChatInput from '../components/ChatInput/ChatInput.vue'
 
 const chat = useChatStore()
 const { messages, status, errorMessage } = storeToRefs(chat)

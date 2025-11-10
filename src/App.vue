@@ -5,8 +5,8 @@ Path: src/App.vue
 
 <script setup lang="ts">
 import { RouterView } from 'vue-router'
-import AppSidebar from './components/AppSidebar.vue'
-import AppHeader from './components/AppHeader.vue'
+import AppSidebar from './components/AppSidebar/AppSidebar.vue'
+import AppHeader from './components/AppHeader/AppHeader.vue'
 import { useSidebarStore } from './stores/sidebarStore'
 
 const sidebar = useSidebarStore()

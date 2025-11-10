@@ -1,0 +1,179 @@
+/* --- Layout y columna editorial --- */
+.chat-messages-root {
+  background: var(--bg-main);
+  color: var(--text-primary);
+  min-height: 100%;
+  display: flex;
+  justify-content: center;
+  padding: 0;
+}
+.chat-messages-column {
+  width: 100%;
+  max-width: 720px;
+  margin: 0 auto;
+  padding: 32px 0 24px 0;
+  box-sizing: border-box;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+@media (max-width: 700px) {
+  .chat-messages-column {
+    max-width: 100vw;
+    padding: 16px 0 16px 0;
+  }
+}
+
+/* --- Separador de fecha minimal --- */
+.chat-group-label-row {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin: 24px 0 16px 0;
+  position: relative;
+}
+.chat-group-label {
+  display: flex;
+  align-items: center;
+  font-size: 0.68rem;
+  font-weight: 500;
+  color: var(--text-muted);
+  background: none;
+  padding: 0 0.7em;
+  border-radius: 1em;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  z-index: 1;
+  position: relative;
+  gap: 0.7em;
+}
+.chat-group-hairline {
+  display: inline-block;
+  height: 1px;
+  width: 32px;
+  background: var(--text-muted);
+  opacity: 0.1;
+  border-radius: 1px;
+}
+
+/* --- Lista de mensajes --- */
+.chat-list {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  width: 100%;
+}
+.chat-list-item {
+  margin-bottom: 14px;
+  transition: margin 0.2s;
+}
+.chat-list-item.consecutive {
+  margin-top: -6px;
+  margin-bottom: 10px;
+}
+
+/* --- Mensaje del asistente (bloque plano) --- */
+.chat-row-assistant {
+  width: 100%;
+  display: flex;
+  align-items: flex-start;
+}
+.chat-block-assistant {
+  background: rgba(255,255,255,0.02);
+  color: var(--text-primary);
+  border-radius: 0.6rem;
+  border: 1px solid rgba(255,255,255,0.06);
+  box-shadow: 0 1px 4px #0001;
+  padding: 1.1rem 1.3rem 1.1rem 1.3rem;
+  font-size: 1.07rem;
+  line-height: 1.6;
+  width: 100%;
+  word-break: break-word;
+  transition: background 0.2s, border 0.2s;
+}
+.chat-list-item.consecutive .chat-block-assistant {
+  border-top-left-radius: 0.25rem;
+  margin-top: -2px;
+}
+
+/* --- Mensaje del usuario (cápsula) --- */
+.chat-row-user {
+  width: 100%;
+  display: flex;
+  align-items: flex-start;
+}
+.chat-bubble-user {
+  background: rgba(255,255,255,0.06);
+  color: #e6e6e6;
+  border-radius: 1.2em;
+  padding: 0.85em 1.25em;
+  font-size: 1.07rem;
+  line-height: 1.6;
+  margin-left: 0;
+  margin-right: auto;
+  max-width: 100%;
+  word-break: break-word;
+  border: 1px solid rgba(255,255,255,0.08);
+  box-shadow: 0 1px 2px #0001;
+  transition: background 0.2s, border 0.2s;
+}
+.chat-list-item.consecutive .chat-bubble-user {
+  border-top-left-radius: 0.5em;
+  margin-top: -2px;
+}
+
+/* --- Fila de acciones contextual --- */
+.chat-actions-row {
+  display: flex;
+  gap: 0.25em;
+  margin-top: 8px;
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 0.18s;
+}
+.chat-list-item:hover .chat-actions-row,
+.chat-list-item:focus-within .chat-actions-row {
+  opacity: 1;
+  pointer-events: auto;
+}
+.chat-actions-row-user {
+  justify-content: flex-end;
+}
+.chat-action-btn {
+  background: none;
+  border: none;
+  color: var(--text-muted);
+  padding: 0.2em;
+  border-radius: 0.3em;
+  cursor: pointer;
+  opacity: 0.7;
+  transition: background 0.15s, opacity 0.15s;
+  font-size: 1em;
+}
+.chat-action-btn:hover,
+.chat-action-btn:focus {
+  background: rgba(255,255,255,0.07);
+  opacity: 1;
+}
+
+/* --- Empty state --- */
+.chat-hero-empty {
+  min-height: 60vh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  color: var(--text-muted);
+  padding: 2rem 0;
+}
+.chat-hero-title {
+  font-size: 2rem;
+  font-weight: 600;
+  color: var(--text-primary);
+  letter-spacing: -0.01em;
+}
+.chat-hero-desc {
+  color: var(--text-muted);
+  font-size: 1rem;
+}
