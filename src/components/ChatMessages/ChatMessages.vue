@@ -3,7 +3,7 @@
     <div class="chat-messages-column">
       <template v-if="groupedMessages.length">
         <section v-for="group in groupedMessages" :key="group.key" class="chat-group">
-          <div class="chat-group-label-row">
+          <div v-if="group.label" class="chat-group-label-row">
             <span class="chat-group-label">
               <span class="chat-group-hairline"></span>
               {{ group.label }}
@@ -25,7 +25,7 @@
                   {{ item.message.text }}
                   <span class="chat-meta-time">{{ item.timeLabel }}</span>
                 </div>
-                <div class="chat-actions-row">
+                <div class="chat-actions-row chat-actions-row-below chat-actions-row-compact">
                   <!-- Acciones: copiar, like, dislike, regenerar, más -->
                   <button class="chat-action-btn" title="Copiar"><svg width="16" height="16" viewBox="0 0 16 16"><rect x="3" y="3" width="10" height="10" rx="2" fill="currentColor" opacity="0.18"/></svg></button>
                   <button class="chat-action-btn" title="Me gusta"><svg width="16" height="16" viewBox="0 0 16 16"><path d="M8 13l-5-5 1.41-1.41L8 10.17l3.59-3.58L13 8z" fill="currentColor" opacity="0.18"/></svg></button>
@@ -40,8 +40,7 @@
                   <span class="chat-meta-time">{{ item.timeLabel }}</span>
                 </div>
                 <div class="chat-actions-row chat-actions-row-user">
-                  <button class="chat-action-btn" title="Editar"><svg width="16" height="16" viewBox="0 0 16 16"><rect x="3" y="3" width="10" height="10" rx="2" fill="currentColor" opacity="0.18"/></svg></button>
-                  <button class="chat-action-btn" title="Copiar"><svg width="16" height="16" viewBox="0 0 16 16"><rect x="3" y="3" width="10" height="10" rx="2" fill="currentColor" opacity="0.18"/></svg></button>
+                  <button class="chat-action-btn" title="Más opciones"><svg width="16" height="16" viewBox="0 0 16 16"><circle cx="8" cy="8" r="1.5" fill="currentColor" opacity="0.18"/><circle cx="3.5" cy="8" r="1.5" fill="currentColor" opacity="0.18"/><circle cx="12.5" cy="8" r="1.5" fill="currentColor" opacity="0.18"/></svg></button>
                 </div>
               </div>
             </li>

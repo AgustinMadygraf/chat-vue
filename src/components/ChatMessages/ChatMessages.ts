@@ -13,7 +13,7 @@ type MessageWithMeta = {
 
 type MessageGroup = {
   key: string
-  label: string
+  label?: string
   items: MessageWithMeta[]
 }
 
@@ -100,6 +100,11 @@ export const useChatMessages = (props: ChatMessagesProps) => {
         items: [nextItem],
       })
     })
+
+    // Si todos los mensajes son del mismo día, eliminar completamente el separador (ni label ni espacio)
+    if (groups.size === 1) {
+      return Array.from(groups.values()).map(g => ({ ...g, label: undefined }))
+    }
 
     return Array.from(groups.values())
   })
